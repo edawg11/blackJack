@@ -10,6 +10,7 @@ var gamblerTotal = 0;
 var $dealerCards = $('.dealerCards');
 var $gamblerCards = $('.gamblerCards');
 var cardClass;
+var aceCount =0;
 
 
 
@@ -19,14 +20,30 @@ function init(){
 	displayDealerCards();
 	displayGamblerCards();
 	$('.gamblerTotalSpan').text(gamblerTotal);
-	$('.dealerTotalH').hide();
+	// $('.dealerTotalH').hide();
 	$('.dealerTotalSpan').text(dealerTotal);
 	$('.dealerCards .card:first-child').addClass('flipped');
-	console.log('dealerCards:', dealerCards, 'dealerTotal:', dealerTotal)
-	console.log('gamblerCards:', gamblerCards, 'gamblerTotal:', gamblerTotal);
+	// console.log('dealerCards:', dealerCards, 'dealerTotal:', dealerTotal)
+	// console.log('gamblerCards:', gamblerCards, 'gamblerTotal:', gamblerTotal);
 	$('#hit').on('click' ,gamblerHit);
-	// // $('#stay').on('click', dealerPlay);
-	// $('#reset').on('click', resetGame);
+	$('#stay').on('click', dealerHit);
+	$('#reset').on('click', resetGame);
+
+}
+
+function resetGame(){
+	// aceCount = 0;
+	// $dealerCards.empty();
+	// $gamblerCards.empty();
+	// dealerCards = [];
+	// gamblerCards = [];
+	// dealerTotal = 0;
+	// gamblerTotal= 0;
+	// $('.dealerTotalSpan').text(gamblerTotal);
+	// $('.gamblerTotalSpan').text(dealerTotal);
+	// init();
+	// console.log('clicked');
+
 }
 
 function displayDealerCards (){
@@ -51,19 +68,29 @@ function displayGamblerCards (){
 
 function gamblerHit(){
 	deal(gamblerCards, gamblerHit, 1)
-	var aceCount = 0;
+	aceCount = 0;
 	$('.gamblerTotalSpan').text(gamblerTotal);
 	displayGamblerCards();
-	// checkForBust();
-	console.log('gamblerCards:', gamblerCards, 'gamblerTotal:', gamblerTotal);
+	// checkForAce();
+	checkForBust(gamblerTotal);
 }	
 
 function dealerHit(){
-	deal(dealerCards, dealerTotal, 1)
-	console.log(dealerCards, dealerTotal);
-	displayDealerCards();
-	$('.dealerTotalSpan').text(dealerTotal);
-
+	if(dealerTotal < 17) {
+		deal(dealerCards, dealerTotal, 1)
+		displayDealerCards();
+		$('.dealerTotalSpan').text(dealerTotal);
+		checkForBust(dealerTotal);
+	} else 
+			if (dealerTotal > 17 && dealerTotal < gamblerTotal){
+				deal(dealerCards, dealerTotal, 1)
+				displayDealerCards();
+				$('.dealerTotalSpan').text(dealerTotal);
+				checkForBust(dealerTotal);
+	} else if (dealerTotal < gamblerTotal){
+		deal(dealerCards, dealerTotal, 1);
+		checkForBust;
+	}
 }
 
 function deal(playerCards, playerTotal, number){
@@ -75,8 +102,8 @@ function deal(playerCards, playerTotal, number){
 		var value = parseInt(values[rand]);
 		playerCards.push(cardClass);
 		total += value;
-		deck.splice(deck[rand],1);
-		values.splice(values[rand],1);
+		deck.splice(cardClass,1);
+		values.splice(value,1);
 	}
 		if (playerTotal ===dealerTotal){
 			dealerTotal += total;
@@ -85,8 +112,45 @@ function deal(playerCards, playerTotal, number){
 		}
 }	
 
-function checkForBust(){
+// function checkForAce(){
 	
+// 		$('.gamblerCards .card').each( function(){
+// 			if($(this).hasClass('ace')) {
+// 				console.log('aceFound');
+// 				aceCount +=1;
+// 				gamblerTotal -=10;
+// 				console.log('aceCount:', aceCount);
+// 			}
+// 	  });
+	
+// }
+function checkForBust(player){
+	if (player === gamblerTotal) {
+		if(gamblerTotal > 21) {
+			console.log('youlose');
+			$('.dealerCards .card:first-child').removeClass('flipped');
+			$('.resultsSpan').text('You Lose');
+			$('#stay').off('click');
+			$('#hit').off('click');
+
+		}
+	}
+
+	if(player === dealerTotal){
+		if (dealerTotal < 17) {
+			dealerHit();
+		} else if(dealerTotal >21) {
+			$('.dealerCards .card:first-child').removeClass('flipped');
+			$('.resultsSpan').text('You Win');
+			console.log('you win');
+
+		} else if (dealerTotal <= 21 && dealerTotal > gamblerTotal) {
+			$('.dealerCards .card:first-child').removeClass('flipped');
+			$('.resultsSpan').text('You Lose');
+			$('#stay').off('click');
+			$('#hit').off('click');
+		}
+	}
 };
 
 
