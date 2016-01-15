@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="dealerCards"></div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="gamblerCards"></div>
+				</div>
+			</div>
+
+			<div class="row totals">
+				<div class="col-xs-12">	
+						<div class="col-xs-3 dealerTotal">
+							<h3 class="dealerTotalH">Dealer Total: <span class="dealerTotalSpan"></span></h3>
+							
+						</div>
+						<div class="col-xs-6 results">
+							<h1><span class="resultsSpan col-xs-6">You Win</span></h1>
+							
+								<button class="btn btn-success reset">Reset</button>
+							
+						</div>
+						<div class="col-xs-3 yourTotal">
+							<h3 class="yourTotalH">Your Total: <span class="gamblerTotalSpan"></span></h3>
+						</div>
+					</div>	
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 buttonHolder">
+					<button id="hit" class = "btn btn-success">Hit</button>
+					<button id="stay"class = "btn btn-primary">Stay</button>
+				</div>
+			</div>
+		</div>
+
+
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
